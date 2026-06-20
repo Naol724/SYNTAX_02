@@ -261,7 +261,7 @@ This project is part of the Syntax Software Solutions Internship Program.
 **Naol Gonfa Tasisa**
 - GitHub: [@Naol724](https://github.com/Naol724)
 - Portfolio: [naol.online](https://naol.online)
-- Email: [syntaxsoftwaresolution@gmail.com](mailto:syntaxsoftwaresolution@gmail.com)
+- Email: [syntaxsoftwaresolution@gmail.com](mailto:naolgonfa449@gmail.com)
 
 ---
 
