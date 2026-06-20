@@ -115,35 +115,6 @@ This website template is designed for:
 - **Vercel** - Optimized Next.js deployment platform
 - **Environment Variables** - Secure configuration management
 
----
-
-## 📁 Website Structure
-
-```
-Small-Package-Website/
-├── pages/
-│   ├── index.js (Home)
-│   ├── about.js
-│   ├── services.js
-│   ├── projects.js
-│   └── contact.js
-├── components/
-│   ├── Header.tsx
-│   ├── Navigation.tsx
-│   ├── Footer.tsx
-│   └── ContactForm.tsx
-├── styles/
-│   └── globals.css
-├── public/
-│   └── assets/
-├── lib/
-├── tailwind.config.js
-├── tsconfig.json
-├── package.json
-└── README.md
-```
-
----
 
 ## 🚀 Getting Started
 
