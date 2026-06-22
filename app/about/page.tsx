@@ -1,236 +1,527 @@
+'use client';
+
 import Link from "next/link";
-import { ArrowRight, Target, Eye, Award, Code2, Users, MapPin } from "lucide-react";
+import { motion } from "framer-motion";
+import {
+  ArrowRight, Target, Eye, Award, Code2, Users, MapPin,
+  Zap, Shield, Lightbulb, Heart, Trophy, Calendar
+} from "lucide-react";
+import {
+  FadeInUp, SlideInLeft, SlideInRight, StaggerContainer, StaggerItem,
+  PageTransition
+} from "@/components/ui/motion";
+import { StatsGrid } from "@/components/ui/counter";
+import { TeamGrid } from "@/components/ui/team";
+import { Newsletter } from "@/components/ui/newsletter";
+import { ContactCTA } from "@/components/ui/cta";
 
+// Timeline data from company intelligence report
 const timeline = [
-  { year: "2019", event: "Founded in Addis Ababa. Built our first offline desktop bingo caller app.", dot: "bg-blue-500" },
-  { year: "2020", event: "Launched first real-time online gaming platform with multiplayer support.", dot: "bg-indigo-500" },
-  { year: "2021", event: "Expanded into web development & enterprise solutions for Ethiopian businesses.", dot: "bg-violet-500" },
-  { year: "2022", event: "Became a leading software company in Ethiopia with 30+ active developers.", dot: "bg-purple-500" },
-  { year: "2023", event: "Launched Telegram bots and AI-powered automation solutions.", dot: "bg-blue-600" },
-  { year: "2024", event: "Achieved global reach — serving clients worldwide from Addis Ababa.", dot: "bg-green-500" },
+  { year: "2019", event: "Founded — Started as a small team with big dreams in Addis Ababa.", dot: "bg-blue-500" },
+  { year: "2020", event: "First Gaming Platform — Launched the offline bingo caller system.", dot: "bg-indigo-500" },
+  { year: "2021", event: "Expansion — Expanded into web development and enterprise solutions.", dot: "bg-violet-500" },
+  { year: "2022", event: "Recognition — Became a leading software company in Ethiopia.", dot: "bg-purple-500" },
+  { year: "2023", event: "AI & Bots — Launched Telegram bots and AI-powered solutions.", dot: "bg-blue-600" },
+  { year: "2024", event: "Global Reach — Now serving clients worldwide while rooted in Ethiopia.", dot: "bg-green-500" },
 ];
 
+// Core values from company intelligence report
 const values = [
-  { icon: <Eye className="w-5 h-5" />, title: "Clarity over Complexity", desc: "We build systems that are easy to understand, maintain, and evolve.", color: "bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400" },
-  { icon: <Award className="w-5 h-5" />, title: "Ownership over Excuses", desc: "We take full responsibility for every project — no finger-pointing.", color: "bg-violet-100 dark:bg-violet-900/40 text-violet-600 dark:text-violet-400" },
-  { icon: <Code2 className="w-5 h-5" />, title: "Craft over Shortcuts", desc: "Clean, tested, documented code. We never cut corners.", color: "bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400" },
-  { icon: <Users className="w-5 h-5" />, title: "Relationships That Matter", desc: "Long-term partnerships — not just one-time deliveries.", color: "bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400" },
+  {
+    icon: <Lightbulb className="w-6 h-6" />,
+    title: "Innovation",
+    desc: "Exploring new technologies and creative solutions to stay ahead of the curve.",
+    color: "bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400"
+  },
+  {
+    icon: <Award className="w-6 h-6" />,
+    title: "Quality",
+    desc: "Rigorous testing and quality assurance on every project we deliver.",
+    color: "bg-violet-100 dark:bg-violet-900/40 text-violet-600 dark:text-violet-400"
+  },
+  {
+    icon: <Zap className="w-6 h-6" />,
+    title: "Efficiency",
+    desc: "On-time delivery without compromising on quality or attention to detail.",
+    color: "bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400"
+  },
+  {
+    icon: <Heart className="w-6 h-6" />,
+    title: "Passion",
+    desc: "We love what we do and it shows in every product we build.",
+    color: "bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400"
+  },
 ];
 
-const team = [
-  { name: "Nathenal Teklay", role: "Co-Founder & CEO", initials: "NT", bio: "Leads business strategy, vision, and client relationships.", grad: "from-blue-500 to-blue-700" },
-  { name: "Leulseged Lemma", role: "Co-Founder & CTO", initials: "LL", bio: "Oversees technical architecture and engineering standards.", grad: "from-indigo-500 to-indigo-700" },
-  { name: "Tsega", role: "Senior Developer", initials: "TS", bio: "Full-stack expert in scalable web & enterprise platforms.", grad: "from-violet-500 to-violet-700" },
-  { name: "Nati", role: "Senior Developer", initials: "NA", bio: "Backend architect focused on API design & high-performance systems.", grad: "from-cyan-500 to-cyan-700" },
-  { name: "Kiya", role: "Cybersecurity Specialist", initials: "KI", bio: "Penetration testing, data protection & security audits.", grad: "from-red-500 to-red-700" },
+// Stats data
+const stats = [
+  { value: "50+", label: "Projects Delivered", icon: <Trophy className="w-5 h-5" /> },
+  { value: "100+", label: "Happy Clients", icon: <Users className="w-5 h-5" /> },
+  { value: "5+", label: "Years Active", icon: <Calendar className="w-5 h-5" /> },
+  { value: "30+", label: "Team Members", icon: <Users className="w-5 h-5" /> },
 ];
 
-const pillars = [
-  { label: "Innovation", emoji: "💡" },
-  { label: "Quality", emoji: "✅" },
-  { label: "Efficiency", emoji: "⚡" },
-  { label: "Passion", emoji: "🔥" },
+// Leadership team
+const leadership = [
+  { name: "Nathenal Teklay", role: "CEO & Co-Founder", initials: "NT", grad: "from-blue-500 to-blue-700", bio: "Leads business strategy, vision, and client relationships. Passionate about building Ethiopia's tech ecosystem." },
+  { name: "Leulseged Lemma", role: "CTO & Co-Founder", initials: "LL", grad: "from-indigo-500 to-indigo-700", bio: "Oversees technical architecture and engineering standards. Full-stack expert with 10+ years experience." },
 ];
-
-export const metadata = {
-  title: "About Us — Syntax Software Solutions",
-  description: "Learn about Syntax Software Solutions, founded in 2019 in Addis Ababa, Ethiopia. Meet our team and learn our story.",
-};
 
 export default function About() {
   return (
-    <>
-      {/* Hero */}
-      <section className="relative bg-gradient-to-br from-gray-900 via-gray-900 to-blue-950 text-white py-24 overflow-hidden">
-        <div className="absolute inset-0 dot-grid opacity-60" />
-        <div className="absolute right-0 top-0 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl" />
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl animate-fade-up">
-            <div className="glass rounded-full inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium mb-7">
-              <MapPin className="w-3.5 h-3.5 text-blue-400" /> Addis Ababa, Ethiopia · Est. 2019
-            </div>
-            <h1 className="text-4xl sm:text-5xl font-black mb-6 leading-tight">
-              About Syntax<br />
-              <span className="gradient-text">Software Solutions</span>
-            </h1>
-            <p className="text-gray-300 text-lg leading-relaxed max-w-2xl">
+    <PageTransition>
+      {/* Hero Section with Static Office Background */}
+      <section className="relative text-white py-32 overflow-hidden min-h-[70vh] flex items-center">
+        {/* Static Background Image (No Parallax) */}
+        <motion.div
+          initial={{ scale: 1.05, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.2 }}
+          className="absolute inset-0 z-0"
+        >
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: 'url(/images/office-team.jpg)',
+            }}
+          />
+          {/* More Transparent Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/75 via-blue-950/70 to-indigo-950/75" />
+          
+          {/* Lighter Animated Glow Effects */}
+          <div className="absolute right-0 top-0 w-96 h-96 bg-blue-600/15 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute left-1/2 bottom-0 w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        </motion.div>
+
+        {/* Dot Pattern Overlay */}
+        <div className="absolute inset-0 opacity-10 z-10 dot-grid" />
+
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 }}
+              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-5 py-2 mb-8 border border-white/10"
+            >
+              <MapPin className="w-4 h-4 text-cyan-400" />
+              <span className="text-sm font-medium">Bole Dembel, Addis Ababa • Est. 2019</span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-4xl sm:text-5xl lg:text-6xl font-black mb-6 leading-tight"
+            >
+              Building the Digital Future<br />
+              <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 bg-clip-text text-transparent">
+                of Ethiopia
+              </span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
+            >
               Product-led, design-driven, delivery-focused. We help businesses across Ethiopia and the world grow through world-class software.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
         </div>
       </section>
 
-      {/* Who We Are */}
-      <section className="py-20 bg-white dark:bg-gray-950">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Company Overview */}
+      <section className="py-24 bg-white dark:bg-gray-950">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="animate-slide-in-left">
-              <p className="section-label"><Target className="w-3.5 h-3.5" /> Who We Are</p>
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <span className="section-label">
+                <Target className="w-3.5 h-3.5" /> Who We Are
+              </span>
               <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-6">
-                Not a body shop.<br />A real software partner.
+                Not a Body Shop. A Real Software Partner.
               </h2>
-              <p className="text-gray-500 dark:text-gray-400 leading-relaxed mb-4">
-                Founded in 2019 in Addis Ababa, Syntax Software Solutions started with a single offline bingo caller and has grown into a full-service software house with 30+ developers delivering projects worldwide.
-              </p>
-              <p className="text-gray-500 dark:text-gray-400 leading-relaxed mb-4">
-                Every project gets our full attention — from discovery and design through development, deployment, and long-term support. We run cybersecurity audits on everything we ship.
-              </p>
-              <p className="text-gray-500 dark:text-gray-400 leading-relaxed">
-                Our approach is agile and sprint-based: we plan transparently, communicate clearly, and deliver on time.
-              </p>
-            </div>
-            <div className="animate-fade-up delay-200">
+              <div className="space-y-5 text-gray-600 dark:text-gray-400 leading-relaxed">
+                <p>
+                  Founded in 2019 in Addis Ababa, Syntax Software Solutions started with a mission to bridge the digital divide and bring world-class software to Ethiopian businesses. From a small team of passionate developers, we've grown into a comprehensive software house serving clients across healthcare, gaming, e-commerce, enterprise, and more.
+                </p>
+                <p>
+                  Every project gets our full attention — from discovery and design through development, deployment, and long-term support. We run cybersecurity audits on everything we ship and follow agile methodologies with sprint-based delivery.
+                </p>
+                <p>
+                  Our approach is transparent and collaborative: we plan carefully, communicate clearly, and deliver on time. We're not just code writers — we're your technology partner.
+                </p>
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                className="mt-8"
+              >
+                <Link href="/contact" className="btn-primary">
+                  Work With Us <ArrowRight className="w-4 h-4" />
+                </Link>
+              </motion.div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
               <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl p-8 text-white shadow-2xl shadow-blue-500/20">
                 <div className="grid grid-cols-2 gap-6">
-                  {[
-                    { value: "2019", label: "Founded" },
-                    { value: "50+", label: "Projects" },
-                    { value: "100+", label: "Clients" },
-                    { value: "30+", label: "Developers" },
-                  ].map((item) => (
-                    <div key={item.label} className="text-center p-4 rounded-2xl bg-white/10">
-                      <div className="text-3xl font-black">{item.value}</div>
-                      <div className="text-blue-200 text-sm mt-1 font-medium">{item.label}</div>
-                    </div>
+                  {stats.map((stat, index) => (
+                    <motion.div
+                      key={stat.label}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                      className="text-center p-5 rounded-2xl bg-white/10 backdrop-blur-sm"
+                    >
+                      <div className="text-3xl sm:text-4xl font-black mb-1">{stat.value}</div>
+                      <div className="text-blue-200 text-sm font-medium">{stat.label}</div>
+                    </motion.div>
                   ))}
                 </div>
-                <div className="border-t border-white/20 mt-6 pt-5 flex items-start gap-2">
-                  <MapPin className="w-4 h-4 text-blue-300 flex-shrink-0 mt-0.5" />
-                  <p className="text-blue-100 text-sm">Bole Dembel, Amir Commercial Complex, Addis Ababa, Ethiopia</p>
+                <div className="border-t border-white/20 mt-6 pt-6 flex items-start gap-3">
+                  <MapPin className="w-5 h-5 text-blue-300 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium text-blue-100">Headquarters</p>
+                    <p className="text-sm text-blue-200/80">Bole Dembel, Amir Commercial Complex<br />Addis Ababa, Ethiopia</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <p className="section-label"><Eye className="w-3.5 h-3.5" /> Our Direction</p>
-            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white">Mission & Vision</h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-6 mb-10">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700 hover:border-blue-200 dark:hover:border-blue-700 hover:shadow-xl transition-all duration-300 group">
-              <div className="w-12 h-12 rounded-2xl bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-                <Target className="w-6 h-6" />
+      <section className="py-24 bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="section-label">
+              <Eye className="w-3.5 h-3.5" /> Our Direction
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-4">
+              Mission & Vision
+            </h2>
+            <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+              Guiding principles that shape everything we do at Syntax Software Solutions.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-16">
+            {/* Mission */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300"
+            >
+              <div className="w-14 h-14 rounded-2xl bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-6">
+                <Target className="w-7 h-7" />
               </div>
-              <h3 className="text-xl font-black text-gray-900 dark:text-white mb-3">Our Mission</h3>
-              <p className="text-gray-500 dark:text-gray-400 leading-relaxed">
-                Help businesses grow by delivering software that solves real problems — built with modern tools, clear communication, and disciplined execution.
+              <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-4">Our Mission</h3>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                To build modern software products for ambitious businesses. We design, develop, launch, and support digital systems that help organizations grow with confidence and achieve their goals.
               </p>
-            </div>
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700 hover:border-indigo-200 dark:hover:border-indigo-700 hover:shadow-xl transition-all duration-300 group">
-              <div className="w-12 h-12 rounded-2xl bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-                <Eye className="w-6 h-6" />
+            </motion.div>
+
+            {/* Vision */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300"
+            >
+              <div className="w-14 h-14 rounded-2xl bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-6">
+                <Eye className="w-7 h-7" />
               </div>
-              <h3 className="text-xl font-black text-gray-900 dark:text-white mb-3">Our Vision</h3>
-              <p className="text-gray-500 dark:text-gray-400 leading-relaxed">
-                Become the most trusted software partner for businesses in Ethiopia and East Africa — known for quality, reliability, and results.
+              <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-4">Our Vision</h3>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                To become the most trusted software partner for businesses in Ethiopia and East Africa — known for quality, reliability, exceptional results, and making a real impact on the local tech ecosystem.
               </p>
-            </div>
+            </motion.div>
           </div>
-          <div className="flex flex-wrap justify-center gap-3">
-            {pillars.map((p) => (
-              <div key={p.label} className="flex items-center gap-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl px-5 py-3 shadow-sm hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-md transition-all duration-200 cursor-default">
-                <span className="text-xl">{p.emoji}</span>
-                <span className="font-bold text-gray-800 dark:text-gray-200 text-sm">{p.label}</span>
-              </div>
+
+          {/* Core Values Pillars */}
+          <div className="flex flex-wrap justify-center gap-4">
+            {["Innovation", "Quality", "Efficiency", "Passion"].map((pillar, index) => (
+              <motion.div
+                key={pillar}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="flex items-center gap-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl px-6 py-3.5 shadow-sm hover:shadow-md transition-all duration-200 cursor-default"
+              >
+                <span className="text-xl">{index === 0 ? "💡" : index === 1 ? "✅" : index === 2 ? "⚡" : "🔥"}</span>
+                <span className="font-bold text-gray-800 dark:text-gray-200 text-sm">{pillar}</span>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Values */}
-      <section className="py-20 bg-white dark:bg-gray-950">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <p className="section-label"><Award className="w-3.5 h-3.5" /> Core Values</p>
-            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-4">How We Operate</h2>
-            <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">Principles that guide every decision, every line of code, every client interaction.</p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {values.map((v, i) => (
-              <div key={v.title} className={`group p-6 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 card-hover animate-fade-up delay-${(i + 1) * 100}`}>
-                <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 ${v.color}`}>
-                  {v.icon}
+      {/* Core Values Detail */}
+      <section className="py-24 bg-white dark:bg-gray-950">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="section-label">
+              <Award className="w-3.5 h-3.5" /> Core Values
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-4">
+              How We Operate
+            </h2>
+            <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+              Principles that guide every decision, every line of code, and every client interaction.
+            </p>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {values.map((value, index) => (
+              <motion.div
+                key={value.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="p-7 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
+              >
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 ${value.color}`}>
+                  {value.icon}
                 </div>
-                <h3 className="font-bold text-gray-900 dark:text-white mb-2 text-sm">{v.title}</h3>
-                <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">{v.desc}</p>
-              </div>
+                <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-2">{value.title}</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{value.desc}</p>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Timeline */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <p className="section-label">📅 History</p>
-            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-4">Our Journey</h2>
-            <p className="text-gray-500 dark:text-gray-400">From one desktop app to a global software company.</p>
-          </div>
-          <div className="relative max-w-2xl mx-auto">
+      <section className="py-24 bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="section-label">
+              <Calendar className="w-3.5 h-3.5" /> Our Journey
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-4">
+              From Dream to Reality
+            </h2>
+            <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+              Six years of growth, innovation, and delivering exceptional software solutions.
+            </p>
+          </motion.div>
+
+          <div className="relative max-w-3xl mx-auto">
+            {/* Vertical line */}
             <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-400 via-indigo-400 to-green-400 rounded-full" />
-            <div className="space-y-6">
-              {timeline.map((item, i) => (
-                <div key={item.year} className={`relative flex items-start gap-6 pl-20 animate-fade-up delay-${(i + 1) * 100}`}>
-                  <div className={`absolute left-4 w-8 h-8 rounded-full ${item.dot} flex items-center justify-center text-white text-xs font-black shadow-lg`}>
-                    {item.year.slice(2)}
+            
+            <div className="space-y-8">
+              {timeline.map((item, index) => (
+                <motion.div
+                  key={item.year}
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.15 }}
+                  className="relative flex items-start gap-8 pl-20"
+                >
+                  {/* Year badge */}
+                  <div className={`absolute left-0 w-16 h-16 rounded-2xl ${item.dot} flex items-center justify-center text-white font-black text-lg shadow-lg z-10`}>
+                    <span className="text-xs">{item.year.slice(2)}</span>
                   </div>
+
+                  {/* Content */}
                   <div className="flex-1">
-                    <div className="text-xs font-bold text-blue-600 dark:text-blue-400 mb-1">{item.year}</div>
-                    <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                      {item.event}
+                    <div className="text-sm font-bold text-blue-600 dark:text-blue-400 mb-2">{item.year}</div>
+                    <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow">
+                      <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{item.event}</p>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Team */}
-      <section className="py-20 bg-white dark:bg-gray-950">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <p className="section-label"><Users className="w-3.5 h-3.5" /> Core Team</p>
-            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-4">Meet the People Behind It</h2>
-            <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">Led by two founders, backed by 30+ developers across web, mobile, and DevOps.</p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {team.map((m, i) => (
-              <div key={m.name} className={`group p-6 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 card-hover animate-fade-up delay-${(i + 1) * 100}`}>
-                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${m.grad} flex items-center justify-center text-white text-lg font-black mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                  {m.initials}
+      {/* Leadership Team */}
+      <section className="py-24 bg-white dark:bg-gray-950">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="section-label">
+              <Users className="w-3.5 h-3.5" /> Leadership
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-4">
+              Meet Our Founders
+            </h2>
+            <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+              Two visionaries leading Syntax Software Solutions to transform Ethiopia's digital landscape.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {leadership.map((member, index) => (
+              <motion.div
+                key={member.name}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.2 }}
+                className="p-8 rounded-3xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 hover:shadow-xl transition-all duration-300"
+              >
+                <div className="flex items-start gap-6">
+                  <div className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${member.grad} flex items-center justify-center text-white text-2xl font-black shadow-lg flex-shrink-0`}>
+                    {member.initials}
+                  </div>
+                  <div>
+                    <h3 className="font-black text-gray-900 dark:text-white text-xl mb-1">{member.name}</h3>
+                    <p className="text-sm font-semibold text-blue-600 dark:text-blue-400 mb-3">{member.role}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{member.bio}</p>
+                  </div>
                 </div>
-                <h3 className="font-black text-gray-900 dark:text-white">{m.name}</h3>
-                <p className="text-xs font-semibold text-blue-600 dark:text-blue-400 mb-2">{m.role}</p>
-                <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{m.bio}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
-          <div className="mt-8 text-center">
-            <div className="inline-flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-2xl px-6 py-3.5 text-sm text-blue-700 dark:text-blue-300 font-medium">
-              <Users className="w-4 h-4" />
-              Plus <span className="font-black mx-1">30+</span> developers across full-stack, mobile, backend & DevOps
-            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-blue-700 to-indigo-700 text-white relative overflow-hidden">
-        <div className="absolute inset-0 dot-grid opacity-50" />
-        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-black mb-4">Ready to Work With Us?</h2>
-          <p className="text-blue-100/90 mb-8">Let's discuss your project. We respond within 24 hours.</p>
-          <Link href="/contact" className="btn-white text-base px-8 py-3">Get in Touch <ArrowRight className="w-4 h-4" /></Link>
+      {/* Team Section */}
+      <section className="py-24 bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="section-label">
+              <Users className="w-3.5 h-3.5" /> Our Team
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-4">
+              The People Behind the Code
+            </h2>
+            <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+              A talented team of developers, designers, and engineers passionate about building exceptional software.
+            </p>
+          </motion.div>
+
+          <TeamGrid columns={5} />
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+            className="text-center mt-10"
+          >
+            <div className="inline-flex items-center gap-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-2xl px-6 py-3.5 text-sm text-blue-700 dark:text-blue-300 font-medium">
+              <Users className="w-4 h-4" />
+              Plus <span className="font-black mx-1">30+</span> developers across full-stack, mobile, backend & DevOps
+            </div>
+          </motion.div>
         </div>
       </section>
-    </>
+
+      {/* Community Engagement */}
+      <section className="py-24 bg-gradient-to-br from-blue-600 to-indigo-700 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <span className="section-label text-cyan-300">
+                <Heart className="w-3.5 h-3.5" /> Community
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-black mb-6">
+                Building More Than Software
+              </h2>
+              <p className="text-blue-100/90 text-lg leading-relaxed mb-8">
+                Beyond software, Syntax Software Solutions believes in building community. The company fields an active football team that represents their commitment to teamwork, health, and social contribution.
+              </p>
+              <p className="text-blue-100/90 text-lg leading-relaxed">
+                This reflects how we approach every project — with collaboration, dedication, and a focus on collective success. We believe that great teams create great software.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="relative"
+            >
+              <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20">
+                <div className="text-center">
+                  <div className="text-6xl mb-4">⚽</div>
+                  <h3 className="text-xl font-black mb-2">Syntax FC</h3>
+                  <p className="text-blue-100/80 mb-6">Company Football Team</p>
+                  
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="p-4 rounded-xl bg-white/10">
+                      <div className="text-2xl font-black">2020</div>
+                      <div className="text-xs text-blue-200">Founded</div>
+                    </div>
+                    <div className="p-4 rounded-xl bg-white/10">
+                      <div className="text-2xl font-black">15+</div>
+                      <div className="text-xs text-blue-200">Players</div>
+                    </div>
+                    <div className="p-4 rounded-xl bg-white/10">
+                      <div className="text-2xl font-black">5</div>
+                      <div className="text-xs text-blue-200">Trophies</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact CTA */}
+      <ContactCTA />
+    </PageTransition>
   );
 }
