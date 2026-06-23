@@ -390,7 +390,7 @@ export default function Home() {
       </div>
 
       {/* Stats Section with Glassmorphism */}
-      <section className="relative z-20 py-20 bg-white/40 dark:bg-gray-950/40 backdrop-blur-md overflow-hidden">
+      <section className="relative z-20 py-20 bg-white/75 dark:bg-gray-950/75 backdrop-blur-lg overflow-hidden">
         <div className="absolute inset-0 opacity-30">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(59,130,246,0.08),transparent_50%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(99,102,241,0.08),transparent_50%)]" />
@@ -437,7 +437,7 @@ export default function Home() {
       </section>
 
       {/* Process Section with Premium Animations */}
-      <section className="relative z-20 py-32 bg-white/30 dark:bg-gray-950/30 backdrop-blur-lg overflow-hidden">
+      <section className="relative z-20 py-32 bg-white/90 dark:bg-gray-950/90 backdrop-blur-xl overflow-hidden">
         {/* Subtle Grid Background */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.03)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]" />
         
@@ -537,7 +537,7 @@ export default function Home() {
       </section>
 
       {/* Why Choose Us Section with Premium Cards */}
-      <section className="relative z-20 py-32 bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50 dark:from-gray-900 dark:via-blue-950/20 dark:to-gray-900 overflow-hidden">
+      <section className="relative z-20 py-32 bg-white/85 dark:bg-gray-950/85 backdrop-blur-xl overflow-hidden">
         {/* Animated Background Pattern */}
         <div className="absolute inset-0 opacity-30">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(59,130,246,0.1),transparent_50%)]" />
