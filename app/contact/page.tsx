@@ -18,7 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   insertContactMessageSchema,
   type InsertContactMessage
-} from "@/shared/schema";
+} from "@/lib/schema";
 import { apiRequest } from "@/lib/queryClient";
 import {
   FadeInUp, SlideInLeft, SlideInRight, StaggerContainer, StaggerItem,

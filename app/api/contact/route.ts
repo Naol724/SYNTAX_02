@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createContactMessage } from "@/lib/storage";
-import { insertContactMessageSchema } from "@/shared/schema";
+import { insertContactMessageSchema } from "@/lib/schema";
 
 export async function POST(request: NextRequest) {
   try {

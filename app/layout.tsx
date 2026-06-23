@@ -9,8 +9,59 @@ import { AnimatedBackground } from "@/components/ui/animated-background";
 import { FloatingActionButton } from "@/components/ui/floating-action-button";
 
 export const metadata: Metadata = {
-  title: "Syntax Software Solutions — Building the Digital Future of Ethiopia",
+  metadataBase: new URL('https://syntaxsoftwaresolution.com'),
+  title: {
+    default: "Syntax Software Solutions — Building the Digital Future of Ethiopia",
+    template: "%s | Syntax Software Solutions"
+  },
   description: "Full-stack software company delivering websites, mobile apps, gaming platforms, enterprise systems, and AI-powered bots. Based in Addis Ababa, Ethiopia.",
+  keywords: [
+    "Software Development Ethiopia",
+    "Web Development Addis Ababa",
+    "Mobile App Development",
+    "Enterprise Software",
+    "Gaming Platforms",
+    "AI Chatbots",
+    "Full Stack Development",
+    "Next.js Development",
+    "React Native Apps",
+    "Ethiopia Tech Company"
+  ],
+  authors: [{ name: "Syntax Software Solutions" }],
+  creator: "Syntax Software Solutions",
+  publisher: "Syntax Software Solutions",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://syntaxsoftwaresolution.com',
+    title: 'Syntax Software Solutions — Building the Digital Future of Ethiopia',
+    description: 'Full-stack software company delivering websites, mobile apps, gaming platforms, enterprise systems, and AI-powered bots.',
+    siteName: 'Syntax Software Solutions',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Syntax Software Solutions',
+    description: 'Full-stack software company in Addis Ababa, Ethiopia',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'your-google-verification-code',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -22,9 +73,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ScrollProgress />
           <PageLoader />
           <FloatingActionButton />
-          <div className="relative min-h-screen flex flex-col bg-white dark:bg-gray-950">
+          <div className="relative min-h-screen flex flex-col">
             <Navbar />
-            <main className="flex-1">
+            <main className="flex-1 relative z-10">
               {children}
             </main>
             <div className="relative z-20">
