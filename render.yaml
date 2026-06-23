@@ -1,12 +1,15 @@
 services:
   - type: web
     name: syntax-software-solutions
-    runtime: node
+    env: node
+    region: oregon
+    plan: free
     buildCommand: npm install && npm run build
     startCommand: npm start
-    healthCheckPath: /
     envVars:
       - key: NODE_ENV
         value: production
-      - key: NODE_VERSION
-        value: 20.20.0
+      - key: MONGODB_URI
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
