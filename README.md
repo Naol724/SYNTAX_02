@@ -2,6 +2,8 @@
 
 Premium glassmorphism website for Syntax Software Solutions - A full-stack software company based in Addis Ababa, Ethiopia.
 
+**Production Ready** ✅
+
 ## 🚀 Quick Start
 
 ```bash
