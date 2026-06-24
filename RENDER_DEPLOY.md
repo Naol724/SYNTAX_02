@@ -40,7 +40,7 @@ Click **Advanced** → Add these variables:
 | Key | Value |
 |-----|-------|
 | `NODE_ENV` | `production` |
-| `MONGODB_URI` | `mongodb+srv://gonfanaol39_db_user:zE1o6bbb4R2BWdZK@cluster0.wpvrb3g.mongodb.net/?appName=Cluster0` |
+| `MONGODB_URI` | `mongodb link` |
 
 ## Step 5: Deploy
 
