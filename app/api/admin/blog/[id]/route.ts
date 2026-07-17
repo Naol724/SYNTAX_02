@@ -3,11 +3,12 @@ import { auth } from '@/lib/auth';
 import { connectDB } from '@/lib/mongoose';
 import Blog from '@/models/Blog';
 
+type RouteContext = {
+  params: Promise<{ id: string }>;
+};
+
 // GET - Get single blog post
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(req: NextRequest, { params }: RouteContext) {
   try {
     const session = await auth();
     if (!session) {
@@ -16,7 +17,8 @@ export async function GET(
 
     await connectDB();
 
-    const post = await Blog.findById(params.id).populate('author', 'name email');
+    const { id } = await params;
+    const post = await Blog.findById(id).populate('author', 'name email');
 
     if (!post) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 });
@@ -29,10 +31,7 @@ export async function GET(
 }
 
 // PUT - Update blog post
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(req: NextRequest, { params }: RouteContext) {
   try {
     const session = await auth();
     if (!session) {
@@ -41,10 +40,11 @@ export async function PUT(
 
     await connectDB();
 
+    const { id } = await params;
     const body = await req.json();
 
     const post = await Blog.findByIdAndUpdate(
-      params.id,
+      id,
       { $set: body },
       { new: true, runValidators: true }
     );
@@ -60,10 +60,7 @@ export async function PUT(
 }
 
 // DELETE - Delete blog post
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(req: NextRequest, { params }: RouteContext) {
   try {
     const session = await auth();
     if (!session) {
@@ -72,7 +69,8 @@ export async function DELETE(
 
     await connectDB();
 
-    const post = await Blog.findByIdAndDelete(params.id);
+    const { id } = await params;
+    const post = await Blog.findByIdAndDelete(id);
 
     if (!post) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 });

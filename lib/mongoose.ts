@@ -1,17 +1,19 @@
-import mongoose from 'mongoose';
+import mongoose, { type Mongoose } from 'mongoose';
+
+type MongooseCache = {
+  conn: Mongoose | null;
+  promise: Promise<Mongoose> | null;
+};
 
 declare global {
   // eslint-disable-next-line no-var
-  var mongoose: {
-    conn: typeof mongoose | null;
-    promise: Promise<typeof mongoose> | null;
-  };
+  var mongooseCache: MongooseCache | undefined;
 }
 
-let cached = global.mongoose;
+const cached: MongooseCache = global.mongooseCache ?? { conn: null, promise: null };
 
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
+if (!global.mongooseCache) {
+  global.mongooseCache = cached;
 }
 
 export async function connectDB() {
